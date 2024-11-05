@@ -9,21 +9,24 @@ user = os.getenv('USER')
 password = os.getenv('PASSWORD')
 
 examples = """
-1. To find who acted in a movie:
+1. What are the companies in Industrial Machinery
+
 ```
-MATCH (p:Person)-[r:ACTED_IN]->(m:Movie {{title: "Movie Title"}})
-RETURN p.name, r.role
+MATCH (i: Industry {name: 'Industrial Machinery'}) <- [w:IS_INVOLVED_IN] - (c : Company) RETURN c
 ```
 
-2. To find who directed a movie:
+2. Find all sibling companies of Tesla, Inc with ticker 'TSLA'
+
 ```
-MATCH (p:Person)-[r:DIRECTED]->(m:Movie {{title: "Movie Title"}})
-RETURN p.name
+MATCH (c:Company {ticker: 'TSLA'}) <-[:SUBSIDIARY_OF]- (parent) -[:SUBSIDIARY_OF]-> (sibling) RETURN sibling
 ```
 """
 
 nodes, relationships, relationships_direction = get_schema(host, user, password)
 node_properties, relationships_props = create_train_cypher_data(nodes, relationships, relationships_direction)
+
+print(node_properties)
+print(relationships_props)
 # node_properties = """
 # [
 #     {

@@ -74,5 +74,5 @@ if st.session_state.messages[-1]["role"] != "assistant":
         st.session_state.messages.append(message)
         
         # Append the full `response` to session state as a separate message
-        if not response.empty:
+        if isinstance(response, str) or not response.empty:
             st.session_state.messages.append({"role": "assistant", "content": response})

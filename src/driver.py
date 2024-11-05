@@ -25,7 +25,7 @@ def read_query(driver, ai_response, params={}):
         return pandas_df, query
     except Exception as inst:
         if "MATCH" in ai_response:
-            return "Either there is no result found for your question Or please help me with additional context!", query
+            return "Exception occurs", query
         else:
             return ai_response, query
     

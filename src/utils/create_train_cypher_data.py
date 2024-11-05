@@ -19,8 +19,15 @@ def create_train_cypher_data(nodes, relationships, relationships_direction):
 
 if __name__ == "__main__":
     from get_graph_schema import get_schema
-
+    from dotenv import load_dotenv
+    import os
+    load_dotenv()
+    host = os.getenv('HOST')
+    user = os.getenv('USER')
+    password = os.getenv('PASSWORD')
+    print("Retrieving all nodes data...")
     nodes, relationships, relationships_direction = get_schema(host, user, password)
+    
     node_properties, relationships_props = create_train_cypher_data(nodes, relationships, relationships_direction)
     print(node_properties)
     print(relationships_props)

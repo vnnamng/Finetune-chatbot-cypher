@@ -1,19 +1,21 @@
 from neo4j import GraphDatabase
 
 def get_schema(host, user, password):
+    print("Connecting to the database...")
+    print(host, user)
 
     # Initialize the driver
     driver = GraphDatabase.driver(host, auth=(user, password))
     query = """
     CALL apoc.meta.data();
     """
-    
     with driver.session() as session:
         result = session.run(query)
         nodes = {}
         relationships = {}
         relationships_direction = {}
         for record in sorted(result, key=lambda x: x["elementType"]):
+            print(record)
             if record["elementType"] == "node":
                 if record["label"] not in nodes:
                     nodes[record["label"]] = []
@@ -21,7 +23,7 @@ def get_schema(host, user, password):
                     nodes[record["label"]].append(record["property"])
                 else:
                     relationships_direction[record["property"]] = (record["label"], record["other"][0])
-            elif record["elementType"] == "relationship" and record["type"] != "RELATIONSHIP":
+            elif record["elementType"] == "relationship":
                 if record["label"] not in relationships:
                     relationships[record["label"]] = []
                 relationships[record["label"]].append(record["property"])
@@ -29,6 +31,12 @@ def get_schema(host, user, password):
     return nodes, relationships, relationships_direction
 if __name__ == "__main__":
 
+    from dotenv import load_dotenv
+    import os
+    load_dotenv()
+    host = os.getenv('HOST')
+    user = os.getenv('USER')
+    password = os.getenv('PASSWORD')
     print("Retrieving all nodes data...")
     nodes, relationships, relationships_direction = get_schema(host, user, password)
     print(nodes)
