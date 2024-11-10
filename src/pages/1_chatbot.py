@@ -102,6 +102,7 @@ if user_input := st.chat_input():
     st.session_state.messages.append({"role": "user", "content": user_input})
     with st.chat_message("user"):
             st.write(user_input)
+st.session_state.last_query = None
 
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
@@ -115,9 +116,8 @@ if st.session_state.messages[-1]["role"] != "assistant":
         # st.write(message["content"])
         
         # If `ai_response` contains a Cypher query, display it
-        if "MATCH" in ai_response:
-            st.write("**AI Response (Main Content):**")
-            st.write(ai_response)
+        st.write("**AI Response (Main Content):**")
+        st.write(ai_response)
         if isinstance(response, pd.DataFrame):
             column_order = reorder_columns(response)
             response_session = st.dataframe(response, column_order=column_order)
@@ -138,8 +138,11 @@ if st.session_state.messages[-1]["role"] != "assistant":
 
 
 left, right = st.columns(2)
-if left.button("Visualise Queries", use_container_width=True):
+if left.button("Add latest query to custom graph", use_container_width=True):
     if st.session_state.last_query is not None:
         st.session_state.queries.append(st.session_state.last_query)
-if right.button("Clear all visualised Queries", use_container_width=True):
+    else:
+        st.warning("No queries to visualise.")
+if right.button("Clear all visualised queries", use_container_width=True):
     st.session_state.queries = []
+    st.warning("Visualised queries cleared.")
