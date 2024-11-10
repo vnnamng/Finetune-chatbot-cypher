@@ -11,9 +11,63 @@ from dotenv import load_dotenv
 from ui import reorder_columns
 load_dotenv()
 
-st.set_page_config(page_title="💬 Ask Me, Rahul")
-st.title("💬 Ask Me, Rahul ")
-st.info("Ask me V0.01 - Rahul | Powered By GPT-4",icon="ℹ️")
+st.set_page_config(page_title="💬 Ask us, Weeping Wranglers ")
+st.title("💬 Ask us, Weeping Wranglers ")
+st.info("Ask us V0.01 - Weeping Wranglers | Powered By GPT-4",icon="ℹ️")
+
+# Define color palette
+COLOR_BLACK = "#000000"
+COLOR_DARK_BLUE = "#14213D"
+COLOR_ORANGE = "#FCA311"
+COLOR_LIGHT_GREY = "#E5E5E5"
+COLOR_WHITE = "#FFFFFF"
+
+# ------------------ Custom CSS ------------------
+
+def inject_custom_css():
+    st.markdown(f"""
+    <style>
+    /* Set the background color of the entire app */
+    .stApp {{
+        background-color: {COLOR_DARK_BLUE};
+        color: {COLOR_WHITE};
+    }}
+    /* Customize the sidebar */
+    .css-1d391kg {{
+        background-color: {COLOR_BLACK};
+        color: {COLOR_WHITE};
+    }}
+    /* Customize headers */
+    h1, h2, h3, h4, h5, h6 {{
+        color: {COLOR_ORANGE};
+    }}
+    /* Customize Streamlit info boxes */
+    .stInfo {{
+        background-color: {COLOR_LIGHT_GREY};
+        color: {COLOR_BLACK};
+    }}
+    /* Customize buttons */
+    .css-1emrehy.edgvbvh3 {{
+        background-color: {COLOR_ORANGE};
+        color: {COLOR_WHITE};
+    }}
+    .css-1emrehy.edgvbvh3:hover {{
+        background-color: {COLOR_WHITE};
+        color: {COLOR_ORANGE};
+    }}
+    /* Customize chat messages */
+    .streamlit-chat-message.user {{
+        background-color: {COLOR_LIGHT_GREY};
+        color: {COLOR_BLACK};
+    }}
+    .streamlit-chat-message.assistant {{
+        background-color: {COLOR_ORANGE};
+        color: {COLOR_WHITE};
+    }}
+    </style>
+    """, unsafe_allow_html=True)
+
+inject_custom_css()
 
 openai.api_key = os.getenv("OPENAI_KEY")
 host = os.getenv('HOST')
