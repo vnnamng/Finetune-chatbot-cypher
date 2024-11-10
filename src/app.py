@@ -1,27 +1,26 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="Hello",
-    page_icon="👋",
+    page_title="Weeping Wranglers",
+    page_icon="🧑🏼‍💻",
 )
 
-st.write("# Welcome to Streamlit! 👋")
+st.write("# Welcome to Our Project! 👋")
 
 st.markdown(
     """
-    Streamlit is an open-source app framework built specifically for
-    Machine Learning and Data Science projects.
-    **👈 Select a demo from the sidebar** to see some examples
-    of what Streamlit can do!
-    ### Want to learn more?
-    - Check out [streamlit.io](https://streamlit.io)
-    - Jump into our [documentation](https://docs.streamlit.io)
-    - Ask a question in our [community
-        forums](https://discuss.streamlit.io)
-    ### See more complex demos
-    - Use a neural net to [analyze the Udacity Self-driving Car Image
-        Dataset](https://github.com/streamlit/demo-self-driving)
-    - Explore a [New York City rideshare dataset](https://github.com/streamlit/demo-uber-nyc-pickups)
+    We are the Weeping Wranglers. We are a group of student 
+    from DSA3101 who designed an AI-Powered Knowledge Graph.
+    This is designed for the fiancial analyst companies to extract
+    meaningful insights from their database.
+    We even trained a chatbot to allow for quicker querying of the database!
+
+    
+    **👈 Select a page from the sidebar** 
+    
+    
+    Try it out for yourself!
+    
 """
 )
 
