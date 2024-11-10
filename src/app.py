@@ -8,6 +8,7 @@ from train_cypher import examples
 from openaigpt4 import generate_cypher
 from neo4j import GraphDatabase
 from dotenv import load_dotenv
+from ui import reorder_columns
 load_dotenv()
 
 st.set_page_config(page_title="💬 Ask Me, Rahul")
@@ -23,8 +24,8 @@ driver = GraphDatabase.driver(host, auth=(user, password))
 def generate_response(prompt, cypher=True):
     usr_input = [{"role": "user", "content": prompt}]
     ai_reponse = generate_cypher(usr_input)
-    query_result, query = read_query(driver, ai_reponse)
-    return query_result, ai_reponse, query
+    query_result, raw_results, query = read_query(driver, ai_reponse)
+    return query_result, raw_results, ai_reponse, query
 
 with st.sidebar:
     st.markdown('📖 Learn more about-Me')
@@ -37,7 +38,8 @@ if "messages" not in st.session_state.keys():
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         if isinstance(message["content"], pd.DataFrame):
-            response_session = st.table(message["content"],)
+            column_order = reorder_columns(message["content"])
+            response_session = st.dataframe(message["content"], column_order=column_order)
         else:
             response_session = st.write(message["content"],)
 
@@ -49,7 +51,7 @@ if user_input := st.chat_input():
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
         # Generate the response, ai_response, and query
-        df_result, ai_response, query = generate_response(user_input)
+        df_result, raw_result, ai_response, query = generate_response(user_input)
         
         response = df_result
         print(response)
@@ -62,7 +64,8 @@ if st.session_state.messages[-1]["role"] != "assistant":
             st.write("**AI Response (Main Content):**")
             st.write(ai_response)
         if isinstance(response, pd.DataFrame):
-            response_session = st.table(response)
+            column_order = reorder_columns(response)
+            response_session = st.dataframe(response, column_order=column_order)
         else:
             response_session = st.write(response)
         # # Display `query` separately if it contains a Cypher query

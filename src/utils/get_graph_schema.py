@@ -15,7 +15,6 @@ def get_schema(host, user, password):
         relationships = {}
         relationships_direction = {}
         for record in sorted(result, key=lambda x: x["elementType"]):
-            print(record)
             if record["elementType"] == "node":
                 if record["label"] not in nodes:
                     nodes[record["label"]] = []
@@ -26,7 +25,8 @@ def get_schema(host, user, password):
             elif record["elementType"] == "relationship":
                 if record["label"] not in relationships:
                     relationships[record["label"]] = []
-                relationships[record["label"]].append(record["property"])
+                if record["property"] not in nodes:
+                    relationships[record["label"]].append(record["property"])
     driver.close()
     return nodes, relationships, relationships_direction
 if __name__ == "__main__":
