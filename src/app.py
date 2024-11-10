@@ -24,3 +24,12 @@ st.markdown(
     - Explore a [New York City rideshare dataset](https://github.com/streamlit/demo-uber-nyc-pickups)
 """
 )
+
+
+
+
+
+
+# Do not removes the following lines
+
+st.session_state.last_query = None

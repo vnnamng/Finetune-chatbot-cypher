@@ -20,7 +20,7 @@ nodes_text_properties = {  # what property to use as text for each node
 }
 
 
-if "queries" not in st.session_state.keys():
+if "queries" not in st.session_state.keys() or st.session_state.queries == []:
     st.markdown("No queries found in session state.")
 else:
     print("Queries found in session state.")

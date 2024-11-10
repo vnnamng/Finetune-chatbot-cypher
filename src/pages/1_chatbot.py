@@ -102,7 +102,7 @@ if user_input := st.chat_input():
     st.session_state.messages.append({"role": "user", "content": user_input})
     with st.chat_message("user"):
             st.write(user_input)
-st.session_state.last_query = None
+            
 
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
@@ -130,7 +130,9 @@ if st.session_state.messages[-1]["role"] != "assistant":
 
         # Append `ai_response` to session state
         st.session_state.messages.append(message)
+        print("adding last query to session state")
         st.session_state.last_query = query
+        print(st.session_state.last_query)
         # Append the full `response` to session state as a separate message
         if isinstance(response, str) or not response.empty:
             st.session_state.messages.append({"role": "assistant", "content": response})
@@ -141,6 +143,7 @@ left, right = st.columns(2)
 if left.button("Add latest query to custom graph", use_container_width=True):
     if st.session_state.last_query is not None:
         st.session_state.queries.append(st.session_state.last_query)
+        st.success("Latest query added to visualisation.")
     else:
         st.warning("No queries to visualise.")
 if right.button("Clear all visualised queries", use_container_width=True):
