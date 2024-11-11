@@ -33,7 +33,7 @@ def get_schema(host, user, password):
     
     with driver.session() as session_2:
         result = session_2.run(constraint_query)
-        constraint = result
+        constraint = result.data()
     
     driver.close()
     return nodes, relationships, relationships_direction, constraint
