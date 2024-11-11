@@ -125,11 +125,13 @@ MATCH (c:Company) -[r:SUBSIDIARY_OF]-> (a:Company) WHERE ANY(name IN c.names WHE
 
 """
 
-nodes, relationships, relationships_direction = get_schema(host, user, password)
+nodes, relationships, relationships_direction, constraints = get_schema(host, user, password)
 node_properties, relationships_props = create_train_cypher_data(nodes, relationships, relationships_direction)
 
 print(node_properties)
 print(relationships_props)
+print("Constraints")
+print(constraints)
 # node_properties = """
 # [
 #     {

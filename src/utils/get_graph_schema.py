@@ -27,8 +27,16 @@ def get_schema(host, user, password):
                     relationships[record["label"]] = []
                 if record["property"] not in nodes:
                     relationships[record["label"]].append(record["property"])
+    
+    constraint_query = """
+    SHOW FULLTEXT INDEXES;"""
+    
+    with driver.session() as session_2:
+        result = session_2.run(constraint_query)
+        constraint = result
+    
     driver.close()
-    return nodes, relationships, relationships_direction
+    return nodes, relationships, relationships_direction, constraint
 if __name__ == "__main__":
 
     from dotenv import load_dotenv
@@ -38,7 +46,7 @@ if __name__ == "__main__":
     user = os.getenv('USER')
     password = os.getenv('PASSWORD')
     print("Retrieving all nodes data...")
-    nodes, relationships, relationships_direction = get_schema(host, user, password)
+    nodes, relationships, relationships_direction, constraint = get_schema(host, user, password)
     print(nodes)
     print("Retrieving all relationships data...")
     print(relationships)

@@ -1,10 +1,10 @@
 import openai
-from train_cypher import node_properties,relationships_props
+from train_cypher import node_properties,relationships_props, constraints
 from train_utils import schema_text,get_system_message
 
 
 def get_graph_model_metadata():
-    return schema_text(node_props=node_properties,rels=relationships_props)
+    return schema_text(node_props=node_properties,rels=relationships_props, constraints=constraints)
 
 def get_sys_prompts():
     schema_txt = get_graph_model_metadata()

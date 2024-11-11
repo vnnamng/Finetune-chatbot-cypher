@@ -1,12 +1,14 @@
 from train_cypher import examples
 
-def schema_text(node_props, rels):
+def schema_text(node_props, rels, constraints):
     return f"""
   This is the schema representation of the Neo4j database.
   Node properties are the following:
   {node_props}
   Relationships from source to target nodes:
   {rels}
+  Constraints:
+  {constraints}
   Make sure to respect relationship types and directions
   """
   
