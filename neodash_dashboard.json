@@ -1,0 +1,476 @@
+{
+  "title": "New dashboard",
+  "version": "2.4",
+  "settings": {
+    "pagenumber": 0,
+    "editable": true,
+    "fullscreenEnabled": false,
+    "parameters": {},
+    "theme": "light"
+  },
+  "pages": [
+    {
+      "title": "Main Page",
+      "reports": [
+        {
+          "id": "39f1e071-49bf-4845-a671-527608f590ad",
+          "title": "Hi there 👋",
+          "query": "**This is your first dashboard!** \n \nYou can click (⋮) to edit this report, or add a new report to get started. You can run any Cypher query directly from each report and render data in a variety of formats. \n \nTip: try _renaming_ this report by editing the title text. You can also edit the dashboard header at the top of the screen.\n\n\n",
+          "width": 6,
+          "height": 4,
+          "x": 0,
+          "y": 0,
+          "type": "text",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "65a6dc8e-e597-423c-9e00-298d1d3f04b4",
+          "title": "Visualizing the Entire Graph",
+          "query": "// It's the entire graph!\nMATCH (a)-[r]->(b)\nRETURN *",
+          "width": 14,
+          "height": 6,
+          "x": 6,
+          "y": 0,
+          "type": "graph",
+          "selection": {
+            "Country": "name",
+            "Region": "name",
+            "IS_IN": "(label)",
+            "Industry": "name",
+            "Sector": "name",
+            "PART_OF": "(label)",
+            "Company": "names",
+            "IS_INVOLVED_IN": "(label)",
+            "COMPETES_WITH": "(label)",
+            "SUBSIDIARY_OF": "(label)",
+            "HEADQUARTERS_IN": "(label)",
+            "OPERATES_IN": "(label)",
+            "SUPPLIES_TO": "(label)"
+          },
+          "settings": {
+            "nodeColorScheme": "category10"
+          },
+          "schema": [
+            [
+              "Country",
+              "gdp",
+              "pv",
+              "name",
+              "iso2",
+              "corporate_tax_rate",
+              "iso3",
+              "population",
+              "aliases"
+            ],
+            [
+              "Region",
+              "m49",
+              "name"
+            ],
+            [
+              "IS_IN"
+            ],
+            [
+              "Industry",
+              "gics",
+              "name",
+              "description",
+              "embedding"
+            ],
+            [
+              "Sector",
+              "gics",
+              "name"
+            ],
+            [
+              "PART_OF"
+            ],
+            [
+              "Company",
+              "ticker",
+              "names",
+              "founded_year"
+            ],
+            [
+              "IS_INVOLVED_IN"
+            ],
+            [
+              "COMPETES_WITH"
+            ],
+            [
+              "SUBSIDIARY_OF"
+            ],
+            [
+              "HEADQUARTERS_IN"
+            ],
+            [
+              "OPERATES_IN",
+              "headcount",
+              "net_sales"
+            ],
+            [
+              "SUPPLIES_TO"
+            ]
+          ]
+        },
+        {
+          "id": "0a806044-3970-47ac-95cf-6f5a88ecdcb0",
+          "title": "2.Top 10 countries > 20%",
+          "query": "MATCH (c:Country) WHERE c.corporate_tax_rate > 20 \nRETURN c.name AS country,c.corporate_tax_rate AS tax_rate\nORDER BY c.corporate_tax_rate DESC\nLIMIT 10;",
+          "width": 6,
+          "height": 4,
+          "x": 0,
+          "y": 4,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "e0beb90c-94bd-458c-be65-d9e6d691f156",
+          "title": "5.region GDP >100B",
+          "query": "MATCH (r:Region)<-[:IS_IN]-(c:Country)\nWHERE c.gdp > 1000\nWITH r.name AS region, COUNT(c) AS country_count\nRETURN region, country_count\nORDER BY country_count DESC\nLIMIT 10;\n",
+          "width": 6,
+          "height": 4,
+          "x": 0,
+          "y": 8,
+          "type": "pie",
+          "selection": {
+            "index": "region",
+            "value": "country_count",
+            "key": "(none)"
+          },
+          "settings": {},
+          "schema": []
+        },
+        {
+          "id": "929e1f15-0a63-4605-9c9b-608c9200e79f",
+          "title": "7.#Total company in China",
+          "query": "MATCH (c:Company)-[:OPERATES_IN]->(cn:Country {name: 'China'}) \nRETURN count(c) AS company_count;\n",
+          "width": 6,
+          "height": 4,
+          "x": 0,
+          "y": 16,
+          "type": "value",
+          "selection": {},
+          "settings": {},
+          "schema": []
+        },
+        {
+          "id": "fbc87b2e-2ca2-4bad-9ae6-07c5e6d6ddd5",
+          "title": "6. Country and GDP",
+          "query": "MATCH (c:Country) -[:IS_IN]-> (r:Region {name: 'Asia'}) RETURN c.name, c.gdp;\n\n\n",
+          "width": 6,
+          "height": 4,
+          "x": 0,
+          "y": 12,
+          "type": "table",
+          "selection": {},
+          "settings": {},
+          "schema": []
+        },
+        {
+          "id": "206a74a5-c28a-4773-85a6-db52e772efb3",
+          "title": "8.Industry in Fin Sector",
+          "query": "MATCH (i:Industry) -[r:PART_OF]-> (s:Sector {name: 'Financials'}) RETURN i,r,s;\n\n\n",
+          "width": 6,
+          "height": 4,
+          "x": 0,
+          "y": 20,
+          "type": "graph",
+          "selection": {
+            "Industry": "name",
+            "PART_OF": "(label)",
+            "Sector": "name"
+          },
+          "settings": {},
+          "schema": [
+            [
+              "Industry",
+              "gics",
+              "name",
+              "description",
+              "embedding"
+            ],
+            [
+              "PART_OF"
+            ],
+            [
+              "Sector",
+              "gics",
+              "name"
+            ]
+          ]
+        },
+        {
+          "id": "dc9f918e-5797-4b93-a20a-f3c6a85cb59f",
+          "title": "10.cnt of competitors",
+          "query": "MATCH (company:Company)-[:COMPETES_WITH]->(competitor:Company)\nWITH company.names AS company_name, COLLECT(competitor.names) AS competitors\nUNWIND competitors AS competitor_name\nRETURN company_name, COUNT(competitor_name) AS competitor_count\nORDER BY competitor_count DESC;\n\n\n\n",
+          "width": 6,
+          "height": 4,
+          "x": 0,
+          "y": 24,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "ca776700-2d5d-4a01-badd-e2bbd6ab5013",
+          "title": "13.sector-industry Germany",
+          "query": "MATCH (co:Company)-[:IS_INVOLVED_IN]->(i:Industry)-[:PART_OF]->(s:Sector),\n      (co)-[:HEADQUARTERS_IN]->(:Country {name: 'Germany'})\nRETURN DISTINCT s.name AS sector, COLLECT(DISTINCT i.name) AS industries\nORDER BY sector\n\n\n\n",
+          "width": 6,
+          "height": 4,
+          "x": 6,
+          "y": 10,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "de45af0c-7f0c-4a9f-8acc-5b9486837839",
+          "title": "11.Competitors of Microsoft Corporation",
+          "query": "MATCH (c:Company {ticker: 'MSFT'})-[r:COMPETES_WITH]->(comp)\nRETURN c, r, comp\n",
+          "width": 6,
+          "height": 4,
+          "x": 0,
+          "y": 32,
+          "type": "graph",
+          "selection": {
+            "Company": "names",
+            "COMPETES_WITH": "(label)"
+          },
+          "settings": {},
+          "schema": [
+            [
+              "Company",
+              "ticker",
+              "names",
+              "founded_year"
+            ],
+            [
+              "COMPETES_WITH"
+            ]
+          ]
+        },
+        {
+          "id": "c03522bc-72ff-4950-9704-4d888c2c0568",
+          "title": "10. Competitors of Microsoft",
+          "query": "MATCH (c:Company {ticker: 'MSFT'}) -[:COMPETES_WITH]-> (comp) RETURN c.names,comp.names\n\n\n",
+          "width": 6,
+          "height": 4,
+          "x": 0,
+          "y": 28,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "cdd89051-0b9c-4e81-8d88-01194050644f",
+          "title": "14. >500M net sales",
+          "query": "MATCH (c:Company)-[o:OPERATES_IN]->(cy:Country {name: 'Brazil'}) \nWHERE o.net_sales > 500 \nRETURN c.names AS company_name, o.net_sales AS net_sales\nORDER BY net_sales DESC\nLIMIT 5;\n",
+          "width": 6,
+          "height": 4,
+          "x": 6,
+          "y": 14,
+          "type": "pie",
+          "selection": {
+            "index": "company_name",
+            "value": "net_sales",
+            "key": "(none)"
+          },
+          "settings": {},
+          "schema": []
+        },
+        {
+          "id": "2ffc9fea-1154-4c13-a8ab-09fd5e76d102",
+          "title": "#Total no. of companies",
+          "query": "MATCH (n:Company)\nRETURN COUNT(n) as Total\n\n\n",
+          "width": 6,
+          "height": 4,
+          "x": 6,
+          "y": 6,
+          "type": "value",
+          "selection": {},
+          "settings": {},
+          "schema": []
+        },
+        {
+          "id": "402da612-51d3-41d2-9f91-0c40ab5209ed",
+          "title": "26. INTC competitors",
+          "query": "MATCH (c:Company {ticker: 'INTC'}) -[s:COMPETES_WITH]-> (o:Company)\nWHERE c <> o\nRETURN c, s, o\n",
+          "width": 6,
+          "height": 4,
+          "x": 13,
+          "y": 18,
+          "type": "graph",
+          "selection": {
+            "Company": "ticker",
+            "COMPETES_WITH": "(label)"
+          },
+          "settings": {},
+          "schema": [
+            [
+              "Company",
+              "ticker",
+              "names",
+              "founded_year"
+            ],
+            [
+              "COMPETES_WITH"
+            ]
+          ]
+        },
+        {
+          "id": "9ba60dc7-4c91-4519-844a-f0bc5aca6c59",
+          "title": "27. Retail REITs in India",
+          "query": "MATCH (o:Country {name: 'India'}) <-[:OPERATES_IN]-(c:Company)-[:IS_INVOLVED_IN]->(x:Industry {name: 'Retail REITs'})\nRETURN c.names AS company,x.name AS industry,o.name AS country;\n\n\n\n",
+          "width": 6,
+          "height": 4,
+          "x": 12,
+          "y": 26,
+          "type": "table",
+          "selection": {},
+          "settings": {},
+          "schema": []
+        },
+        {
+          "id": "727850b4-3b09-4fcd-99ba-db48a459c230",
+          "title": "INTC competitors in each country",
+          "query": "MATCH (c:Company {ticker: 'INTC'}) -[:COMPETES_WITH]-> (o:Company) \nMATCH (o) -[:HEADQUARTERS_IN]-> (cy:Country)\nRETURN cy.iso3 AS country_code, COUNT(o) AS competitor_count\nORDER BY competitor_count DESC\nLIMIT 10;\n\n\n\n",
+          "width": 6,
+          "height": 4,
+          "x": 14,
+          "y": 14,
+          "type": "choropleth",
+          "selection": {
+            "index": "country_code",
+            "value": "competitor_count",
+            "key": "(none)"
+          },
+          "settings": {},
+          "schema": []
+        },
+        {
+          "id": "6e678c64-174f-4631-b3bf-0dca8ddf818a",
+          "title": "25. Industries with Non-Subsidiary Companies",
+          "query": "MATCH (i:Industry) <-[s:IS_INVOLVED_IN]- (c:Company) WHERE NOT (c)-[:SUBSIDIARY_OF]->() RETURN DISTINCT i,s,c;",
+          "width": 6,
+          "height": 4,
+          "x": 14,
+          "y": 10,
+          "type": "graph",
+          "selection": {
+            "Industry": "name",
+            "IS_INVOLVED_IN": "(label)",
+            "Company": "ticker"
+          },
+          "settings": {},
+          "schema": [
+            [
+              "Industry",
+              "gics",
+              "name",
+              "description",
+              "embedding"
+            ],
+            [
+              "IS_INVOLVED_IN"
+            ],
+            [
+              "Company",
+              "ticker",
+              "names",
+              "founded_year"
+            ]
+          ]
+        },
+        {
+          "id": "29a1025e-adbb-429d-9648-f0bc7c6ac5e1",
+          "title": "22. Countries with Software Industry Involvement",
+          "query": "MATCH (cy:Country) <-[:OPERATES_IN]- (co:Company) -[:IS_INVOLVED_IN]-> (I:Industry) WHERE I.description CONTAINS 'Software' \nRETURN DISTINCT co.names AS company,cy.name AS country,I.description AS industry_info;\n\n\n",
+          "width": 6,
+          "height": 4,
+          "x": 13,
+          "y": 6,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "a1a93c35-18fc-435a-a023-1bdd12f8f67e",
+          "title": "",
+          "query": "\n\n\n",
+          "width": 6,
+          "height": 4,
+          "x": 6,
+          "y": 22,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "df6aacb3-0968-45f2-8d9b-85e08c6482e0",
+          "title": "21. Industry with > 3 company",
+          "query": "\nMATCH (i:Industry) <-[:IS_INVOLVED_IN]- (c:Company) \nWITH i, count(DISTINCT c) AS countryCount \nWHERE countryCount > 3\nRETURN i.name AS industry, countryCount\nORDER BY countryCount DESC\n\n\n",
+          "width": 6,
+          "height": 4,
+          "x": 6,
+          "y": 26,
+          "type": "radar",
+          "selection": {
+            "index": "industry",
+            "values": [
+              "countryCount"
+            ]
+          },
+          "settings": {},
+          "schema": []
+        },
+        {
+          "id": "90c7e68a-459e-488b-ab01-1bbbfa9778fe",
+          "title": "",
+          "query": "\n\n\n",
+          "width": 6,
+          "height": 4,
+          "x": 6,
+          "y": 18,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        }
+      ]
+    },
+    {
+      "title": "Barplots",
+      "reports": [
+        {
+          "id": "53d8864f-d0da-4167-bee7-b3a2a2e0dd9a",
+          "title": "#",
+          "query": "",
+          "width": 6,
+          "height": 4,
+          "x": 0,
+          "y": 0,
+          "type": "radar",
+          "selection": {
+            "index": "industry",
+            "values": [
+              "countryCount"
+            ]
+          },
+          "settings": {},
+          "schema": []
+        }
+      ]
+    }
+  ],
+  "parameters": {},
+  "extensions": {
+    "active": true,
+    "activeReducers": [],
+    "advanced-charts": {
+      "active": true
+    }
+  },
+  "uuid": "e4254aaf-6367-4a72-9cd4-9c68b5a3dc5c"
+}
