@@ -15,6 +15,9 @@ COPY .env .env
 # Create the html_files directory if it doesn't exist and set permissions
 RUN mkdir -p /app/html_files && chmod -R 777 /app/html_files
 
+# Create the html_files directory if it doesn't exist and set permissions
+RUN mkdir -p /app/tmp && chmod -R 777 /app/tmp
+
 # Copy the source code from the src directory into /app/src inside the container
 COPY src ./src
 
