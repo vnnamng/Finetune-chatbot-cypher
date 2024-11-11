@@ -60,7 +60,7 @@ python-dotenv==1.0.1
 pytz==2024.2
 pytz-deprecation-shim==0.1.0.post0
 pyvis==0.3.2
-pywin32==308
+pywin32==308; platform_system == "Windows"
 referencing==0.35.1
 requests==2.32.3
 rich==13.9.4
