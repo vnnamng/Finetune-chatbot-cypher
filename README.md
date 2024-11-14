@@ -35,3 +35,10 @@ OPENAI_KEY= <OPENAI_KEY>
 1. Use langchain to implement LogicalAgent to fix limitaiton of not able to queries multiple level.
 2. Improve performance on large scale graph
 3. Add semantics queries.
+
+## Contributors:
+1. [ Xuan Nam ](https://github.com/vnnamng)
+2. [ Amanda ](https://github.com/Apandax): UI/UX and chatbot customisation
+3. [ Viscacha ](https://github.com/raven0205): Docker Setup
+4. [Zhouyu](https://github.com/tzy815): Sponsor of API Key
+5. [Team Weeping Wranglers from NUS DSA3101 AY24/25S1](https://github.com/AY2425S1-DSA3101-Weeping-Wranglers): Source of Neo4J data, ER, Set Up, etc...
