@@ -70,9 +70,9 @@ def inject_custom_css():
 inject_custom_css()
 
 openai.api_key = os.getenv("OPENAI_KEY")
-host = os.getenv('HOST')
-user = os.getenv('USER')
-password = os.getenv('PASSWORD')
+host = os.getenv('NEO4J_URI')
+user = os.getenv('NEO4J_USERNAME')
+password = os.getenv('NEO4J_PASSWORD')
 driver = GraphDatabase.driver(host, auth=(user, password))
 
 

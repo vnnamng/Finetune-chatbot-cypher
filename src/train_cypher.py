@@ -4,9 +4,9 @@ from dotenv import load_dotenv
 import os
 load_dotenv()
 
-host = os.getenv('HOST')
-user = os.getenv('USER')
-password = os.getenv('PASSWORD')
+host = os.getenv('NEO4J_URI')
+user = os.getenv('NEO4J_USERNAME')
+password = os.getenv('NEO4J_PASSWORD')
 
 examples = """
 1. What are the companies in Industrial Machinery

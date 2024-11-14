@@ -6,9 +6,9 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-host = os.getenv('HOST')
-user = os.getenv('USER')
-password = os.getenv('PASSWORD')
+host = os.getenv('NEO4J_URI')
+user = os.getenv('NEO4J_USERNAME')
+password = os.getenv('NEO4J_PASSWORD')
 driver = GraphDatabase.driver(host, auth=(user, password))
 
 nodes_text_properties = {  # what property to use as text for each node

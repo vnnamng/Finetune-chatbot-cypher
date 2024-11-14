@@ -42,9 +42,9 @@ if __name__ == "__main__":
     from dotenv import load_dotenv
     import os
     load_dotenv()
-    host = os.getenv('HOST')
-    user = os.getenv('USER')
-    password = os.getenv('PASSWORD')
+    host = os.getenv('NEO4J_URI')
+    user = os.getenv('NEO4J_USERNAME')
+    password = os.getenv('NEO4J_PASSWORD')
     print("Retrieving all nodes data...")
     nodes, relationships, relationships_direction, constraint = get_schema(host, user, password)
     print(nodes)
