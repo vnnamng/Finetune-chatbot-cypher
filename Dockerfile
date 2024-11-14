@@ -33,4 +33,4 @@ RUN useradd app
 USER app
 
 # Run the Streamlit app 
-CMD ["streamlit", "run", "src/app.py"]
+CMD ["streamlit", "run", "src/Hello.py"]
