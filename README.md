@@ -5,7 +5,7 @@ This chatbot leverages OpenAI's ChatGPT and NEO4J AuraDB to provide an interacti
 User target: intended for users who are not familiar with Cypher and Neo4j languages. It aims to help them perform business intelligence and data analysis tasks quickly and efficiently.
  
 
-## How to run:
+## Standalone Run:
 1. import into .env files these variable
 ```env
 NEO4J_URI= <URI to NEO4J db>
@@ -14,11 +14,11 @@ NEO4J_PASSWORD= <PASSWORD>
 
 OPENAI_KEY= <OPENAI_KEY>
 ```
-
-2. `docker build -t chatbot .` 
+2. add `COPY .env .env` in Dockerfile
+3. `docker build -t chatbot .` 
     > If error, check if docker deamon has been started.
-3. `docker run -d -p 8501:8501 --name chatbot-container chatbot`
-4. Access the chatbot at port 8501 of localhost: 'http://localhost:8501/'
+4. `docker run -d -p 8501:8501 --name chatbot-container chatbot`
+5. Access the chatbot at port 8501 of localhost: 'http://localhost:8501/'
 
 ## Features:
 1. Chatbot with knowledge of KG schema and can generate cypher queries
