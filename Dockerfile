@@ -9,9 +9,6 @@ RUN mkdir -p /app/lib && chmod -R 777 /app/lib
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the .env file to the container
-COPY .env .env
-
 # Create the html_files directory if it doesn't exist and set permissions
 RUN mkdir -p /app/html_files && chmod -R 777 /app/html_files
 
